@@ -2,8 +2,7 @@
 // TODO 2: Import contacts from data.js
 // ============================================
 // Hint: import ______ from './data.js'
-
-
+import contacts from "./data.js"
 
 // ============================================
 // DOM ELEMENTS (done for you)
@@ -41,8 +40,7 @@ let contactsState = [...contacts];
 // Hint: contact.info?.phone || '______'
 
 const displayPhone = (contact) => {
-  // Write your code here
-
+  return contact.info?.phone || "Not available"
 };
 
 
@@ -67,8 +65,21 @@ const displayPhone = (contact) => {
 //   5. Call render()
 
 const addContact = () => {
-  // Write your code here
+  let addedContact = {
+    id : generateId(),
+    name : nameInput.value,
+    info : {
+      email : emailInput.value,
+      phone : phoneInput.value
+    }
+  }
 
+  contactsState = [...contactsState, addedContact]
+  nameInput.value = ''
+  emailInput.value = ''
+  phoneInput.value = ''
+
+  render()
 };
 
 
@@ -83,8 +94,9 @@ const addContact = () => {
 //   3. Call render()
 
 const deleteContact = (id) => {
-  // Write your code here
-
+  let newContacts = contactsState.filter(c => c.id !== id)
+  contactsState = [...newContacts]
+  render()
 };
 
 
@@ -97,8 +109,7 @@ const deleteContact = (id) => {
 // Return the found contact
 
 const getContactById = (id) => {
-  // Write your code here
-
+  return contactsState.find(c => c.id === id)
 };
 
 
@@ -123,7 +134,8 @@ const render = (contactsToRender = contactsState) => {
     <div class="bg-white rounded-lg shadow p-4 mb-3 flex justify-between items-center">
       <div>
         <h3 class="font-semibold text-gray-800">${contact.name}</h3>
-        <p class="text-sm text-gray-500">📧 ${contact.info.email}</p>
+        <p class="text-sm text-gray-500">
+        ${contact.info.email}</p>
         <p class="text-sm text-gray-500">📱 ${displayPhone(contact)}</p>
       </div>
       <div class="flex gap-2">
